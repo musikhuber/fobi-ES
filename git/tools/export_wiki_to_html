@@ -1,0 +1,4 @@
+How to export dokuwiki to html:
+
+1) Load the wiki page you want to export
+2) add to URL: ?do=export_html

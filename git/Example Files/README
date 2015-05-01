@@ -1,0 +1,38 @@
+To USE ... do the following:
+------------------------------------------------------------
+0) You must be root (or add sudo to the commands)
+1) Fetch  ... to your server
+   # git clone ...
+2) Install make
+   # sudo apt-get install make
+3) Install the scripts
+   # cd /path/to/...
+   # make help
+   # make install
+4) To uninstall the scripts:
+   # cd /path/to/...
+   # make uninstall
+
+
+To DEVELOP ... do the following:
+------------------------------------------------------------
+- You must bee root (or add sudo to the commands)
+- Create a testing environment (see USE above)
+- Development process:
+  1) edit the script in the git project dir 
+  2) Install the script into your OS
+     # make install
+  3) Test the script on your machine
+  4) If your script works well, commit the following to the git repo:
+     - the script itself
+     - the updated Todo-File (If you something done)
+     - the updated changelog
+  5) If you have added a new revision, tag your commit
+     # git tag -a V-x.y.z -m "Tag Message"
+  6) If you need to remove the scripts after testing:
+     # make uninstall
+
+
+To test the makefile installation you can use:
+------------------------------------------------------------
+make install DESTDIR=/where/i/want/to/check/installation

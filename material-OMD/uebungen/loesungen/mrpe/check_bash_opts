@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Das ist eine mögliche Lösung für die Übungsidee zu den bash-Prozessen
+
+while getopts 'w:c:h' OPT; do
+  case $OPT in
+    w)  warnlevel=$OPTARG;;
+    c)  critlevel=$OPTARG;;
+    h)  hlp="yes";;
+    *)  unknown="yes";;
+  esac
+done
+
+# usage
+HELP="
+    usage: $0 -w <warning> -c <critical> [ -h ] 
+        <warning> < <critical>
+"
+
+if [ "$hlp" = "yes" -o $# -lt 1 ]; then
+  echo "$HELP"
+  exit 0
+fi
+
+
+count=$(ps -C bash | wc -l)
+
+if [ $count -lt $warnlevel ] ; then
+    status=0
+    statustxt=OK
+elif [ $count -lt $critlevel ] ; then
+    status=1
+    statustxt=WARNING
+else
+    status=2
+    statustxt=CRITICAL
+fi
+
+echo "$statustxt - $count Prozesse mit namen bash|count=$count"
+exit $status

@@ -4,7 +4,7 @@
 # auf bash-Basis. 
 # Quelle: http://mathias-kettner.de/checkmk_localchecks.html
 
-$dir="/var/log"
+dir="/var/log"
 
 count=$(ls $dir | wc --lines)
 

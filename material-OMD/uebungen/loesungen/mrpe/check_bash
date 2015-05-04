@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Das ist eine mögliche Lösung für die Übungsidee zu den bash-Prozessen
+
+
+count=$(ps -C bash | wc -l)
+
+if [ $count -lt 3 ] ; then
+    status=0
+    statustxt=OK
+elif [ $count -lt 6 ] ; then
+    status=1
+    statustxt=WARNING
+else
+    status=2
+    statustxt=CRITICAL
+fi
+
+echo "$statustxt - $count Prozesse mit namen bash|count=$count"
+exit $status

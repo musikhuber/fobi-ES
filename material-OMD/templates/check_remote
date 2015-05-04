@@ -1,0 +1,16 @@
+#!/bin/bash
+
+IP=$1
+PORT=$2
+
+if [ "x$PORT" == "x" ]; then 
+        PORT=6556
+fi
+
+if [ "x$IP" == "x" ]; then
+        echo "IP muss angegeben werden"
+        exit 3
+fi
+
+/bin/netcat $IP $PORT
+

@@ -55,4 +55,26 @@ Subject eingeben, Text eingeben, beenden mit CTRL-D
 tail -f /var/log/mail.log
 
 um Fehler zu sehen.
+
+Problemfall From-Rewrite:
+-------------------------
+
+Rewrite Map in /etc/postfix/generic anlegen und mit den Regeln füllen:
+
+vi /etc/postfix/generic
+
+schule      omdmailer@provider.de 
+root            omdmailer@provider.de
+<weitereomdinstanz>         omdmailer@provider.de
  
+postmap /etc/postfix/generic
+
+vi /etc/postfix/main.cf, hinzufügen
+
+smtp_generic_maps = hash:/etc/postfix/generic
+
+service postfix restart
+
+
+
+

@@ -1,0 +1,92 @@
+Befehlsübersicht: Datensammlung via ssh
+=======================================
+
+Gegeben: 
+--------
+Zielhost im lokalen Netz, unprivilegierter Benutzer "user", sshd läuft
+Monitorhost mit OMD
+
+Auf dem Monitorhost
+-------------------
+
+Schlüsselpaar erzeugen
+
+   ssh-keygen
+
+-> Kein Passwort.
+
+Öffentlicher Schlüssel auf den Brückenhost kopieren
+
+   scp meinkey.pub user@zielhost:~
+
+Auf dem Zielhost
+----------------
+
+Verbinden: 
+ssh user@zielhost
+
+Pubkey hinterlegen:
+mkdir .ssh
+cat meinkey.pub >> .ssh/authorized_keys
+
+Abmelden:
+exit
+
+Testen vom Monitorhost aus:
+---------------------------
+
+ssh -i meinkey user@zielhost 
+
+muss ohne Passwortabfrage gehen.
+
+
+Auf dem Zielhost
+----------------
+
+Skript erstellen, z.B. 
+
+mkdir bin
+cd bin
+vi check_remote
+
+Inhalt:
+
+#!/bin/bash
+IP=$1
+PORT=$2
+if [ "x$PORT" == "x" ]; then
+PORT=6556
+fi
+if [ "x$IP" == "x" ]; then
+echo "IP muss angegeben
+werden"
+exit 3
+fi
+/bin/netcat $IP $PORT
+
+Ausführbar machen:
+chmod 700 check_remote
+
+"netcat" muss installiert sein:
+
+apt-get install netcat
+
+Testen auf dem Zielhost: 
+------------------------
+./check_remote <IP-Adresse>
+
+Testen auf dem Monitoringhost:
+------------------------------
+
+ssh -i meinkey user@zielhost ~/bin/check_remote <IPAdresse>
+
+muss Daten liefern. Das ist die Kommandozeil für die OMD Oberfäche.
+
+
+
+
+
+
+
+
+

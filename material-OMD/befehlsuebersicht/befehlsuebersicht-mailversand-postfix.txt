@@ -1,0 +1,58 @@
+Befehlsübersicht Mailversand
+============================
+
+Postfix installieren:
+---------------------
+
+apt-get install postfix
+
+Auswahl "Satellitensystem", als Mailserver den Meilsversandserver 
+eintragen, der später zum Versand verwendet werden soll.
+
+Zugangsdaten für den Mailversand eingeben:
+------------------------------------------
+
+Datei anlegen:
+
+cd /etc/postfix
+vi sasl_secrets
+
+Inhalt:
+
+mailservername.my.provider   benutzername:passwort
+
+Sicherheit- Zugriffsrechte:
+
+chmod 600 sasl_secrets
+
+Hashmap erzeugen:
+
+postmap sasl_secrets
+
+Postfix Konfiguration anpassen:
+--------------------------------
+
+cd /etc/postfix
+vi main.cf
+
+Dort die folgenden Zeilen anfügen
+
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_screts
+smtp_sasl_security_options = noanonymous
+
+Postfixkonfiguration neu einlesen: 
+
+service postfix reload
+
+Testen:
+-------
+
+Mail ich@irgendwo.de
+
+Subject eingeben, Text eingeben, beenden mit CTRL-D
+
+tail -f /var/log/mail.log
+
+um Fehler zu sehen.
+ 

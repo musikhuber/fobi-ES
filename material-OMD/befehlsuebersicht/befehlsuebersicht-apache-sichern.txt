@@ -1,0 +1,21 @@
+Befehlsübersicht: Absichern von apache2
+========================================
+
+
+SSL Module aktivieren:
+----------------------
+a2enmod ssl
+
+Standard SSL-Konfiguration aktivieren:
+--------------------------------------
+a2ensite default-ssl
+
+Konfiguration für Rewrite eifügen:
+----------------------------------
+vi /etc/apache2/sites-available
+
+Dort im VirtualHost für Port 80 einfügen:
+-----------------------------------------
+RewriteEngine On
+RewriteCond %{HHTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
